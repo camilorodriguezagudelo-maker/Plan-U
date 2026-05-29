@@ -8,8 +8,9 @@
 </head>
 <body>
 
- <h1>🎓 PromedioU</h1>
-<p>Calcula tu promedio universitario de forma rápida, clara y moderna.</p>
+  <main class="container">
+    <h1>🎓 PromedioU</h1>
+    <p>Calcula tu promedio universitario de forma rápida, clara y moderna.</p>
 
     <section class="card">
       <h2>Agregar materia</h2>
@@ -18,7 +19,24 @@
       <input type="number" id="nota" placeholder="Nota final (0.0 a 5.0)" step="0.1" min="0" max="5" />
       <input type="number" id="creditos" placeholder="Créditos" min="1" />
 
-      <button onclick="agregarMateria()">Agregar</button>
+      <button onclick="agregarMateria()">Agregar materia</button>
+    </section>
+
+    <section class="card">
+      <h2>📝 ¿Cuánto necesito en el final?</h2>
+
+      <input type="number" id="nota1" placeholder="Nota parcial 1" step="0.1" min="0" max="5" />
+      <input type="number" id="porcentaje1" placeholder="% Parcial 1" min="0" max="100" />
+
+      <input type="number" id="nota2" placeholder="Nota parcial 2" step="0.1" min="0" max="5" />
+      <input type="number" id="porcentaje2" placeholder="% Parcial 2" min="0" max="100" />
+
+      <input type="number" id="porcentajeFinal" placeholder="% Examen final" min="0" max="100" />
+      <input type="number" id="notaObjetivo" placeholder="Nota final deseada (ej: 3.0)" step="0.1" min="0" max="5" />
+
+      <button onclick="calcularFinal()">Calcular nota necesaria</button>
+
+      <div id="resultadoFinal"></div>
     </section>
 
     <section class="card">
