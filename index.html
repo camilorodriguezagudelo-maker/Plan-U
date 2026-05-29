@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PromedioU</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="container">
+    <h1>PromedioU</h1>
+    <p>Calcula tu promedio ponderado según las notas y créditos de tus materias.</p>
+
+    <section class="card">
+      <h2>Agregar materia</h2>
+
+      <input type="text" id="materia" placeholder="Nombre de la materia" />
+      <input type="number" id="nota" placeholder="Nota final (0.0 a 5.0)" step="0.1" min="0" max="5" />
+      <input type="number" id="creditos" placeholder="Créditos" min="1" />
+
+      <button onclick="agregarMateria()">Agregar</button>
+    </section>
+
+    <section class="card">
+      <h2>Materias</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Materia</th>
+            <th>Nota</th>
+            <th>Créditos</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="tablaMaterias"></tbody>
+      </table>
+    </section>
+
+    <section class="resultado">
+      <h2>Promedio ponderado</h2>
+      <p id="promedio">0.00</p>
+      <p id="estado"></p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
