@@ -6,31 +6,76 @@ body {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #1e3a8a, #312e81);
-  color: #222;
-  animation: fondo 12s ease infinite alternate;
+  background: #0f172a;
+  color: white;
 }
 
-@keyframes fondo {
-  from {
-    background-position: left;
-  }
-  to {
-    background-position: right;
-  }
+.app {
+  width: 92%;
+  max-width: 1100px;
+  margin: 35px auto;
 }
 
-.container {
-  width: 90%;
-  max-width: 950px;
-  margin: 40px auto;
-  animation: aparecer 0.8s ease;
+header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+header h1 {
+  font-size: 48px;
+  margin: 0;
+}
+
+header p {
+  color: #cbd5e1;
+  font-size: 18px;
+}
+
+.tabs {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.tab {
+  flex: 1;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  background: #1e293b;
+  color: #cbd5e1;
+  font-size: 17px;
+  font-weight: bold;
+  transition: 0.25s ease;
+}
+
+.tab:hover {
+  background: #334155;
+  transform: translateY(-2px);
+}
+
+.tab.active {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
+}
+
+.screen {
+  display: none;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 25px;
+  animation: aparecer 0.4s ease;
+}
+
+.active-screen {
+  display: grid;
 }
 
 @keyframes aparecer {
   from {
     opacity: 0;
-    transform: translateY(25px);
+    transform: translateY(18px);
   }
   to {
     opacity: 1;
@@ -38,39 +83,17 @@ body {
   }
 }
 
-h1 {
-  text-align: center;
-  font-size: 48px;
-  color: white;
-  margin-bottom: 5px;
-  letter-spacing: 1px;
-}
-
-.container > p {
-  color: #dbeafe;
-  font-size: 18px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.card {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
+.panel {
+  background: #ffffff;
+  color: #0f172a;
   padding: 28px;
-  margin-top: 25px;
-  border-radius: 22px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 25px 70px rgba(0,0,0,0.35);
-}
-
-h2 {
-  color: #1e3a8a;
+.panel h2 {
   margin-top: 0;
+  color: #1e3a8a;
 }
 
 input {
@@ -81,74 +104,65 @@ input {
   border-radius: 14px;
   font-size: 16px;
   outline: none;
-  transition: 0.25s;
 }
 
 input:focus {
   border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
-  transform: scale(1.01);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }
 
 button {
   width: 100%;
   padding: 15px;
   margin-top: 10px;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  color: white;
   border: none;
   border-radius: 14px;
-  font-size: 17px;
-  font-weight: bold;
   cursor: pointer;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
   transition: 0.25s ease;
 }
 
 button:hover {
-  transform: scale(1.03);
-  box-shadow: 0 12px 25px rgba(37, 99, 235, 0.45);
-}
-
-button:active {
-  transform: scale(0.97);
+  transform: scale(1.02);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 18px;
+  margin-top: 15px;
   overflow: hidden;
-  border-radius: 16px;
-}
-
-th, td {
-  padding: 14px;
-  text-align: center;
+  border-radius: 15px;
 }
 
 th {
   background: #1e3a8a;
   color: white;
+  padding: 13px;
 }
 
-tr {
-  animation: filaNueva 0.4s ease;
+td {
+  padding: 13px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-@keyframes filaNueva {
+tbody tr {
+  animation: fila 0.3s ease;
+}
+
+@keyframes fila {
   from {
     opacity: 0;
-    transform: translateX(-15px);
+    transform: translateX(-12px);
   }
   to {
     opacity: 1;
     transform: translateX(0);
   }
-}
-
-tbody tr {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
 }
 
 tbody tr:hover {
@@ -161,77 +175,63 @@ tbody tr:hover {
   font-size: 14px;
 }
 
-.eliminar:hover {
-  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
-}
-
 .resultado {
-  margin-top: 28px;
-  padding: 32px;
-  background: rgba(255, 255, 255, 0.15);
+  margin-top: 25px;
+  padding: 25px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #1e3a8a, #312e81);
   color: white;
-  border-radius: 25px;
   text-align: center;
-  backdrop-filter: blur(15px);
-  box-shadow: 0 20px 55px rgba(0,0,0,0.3);
-  animation: pulso 2.5s ease infinite;
 }
 
-@keyframes pulso {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.015);
-  }
-  100% {
-    transform: scale(1);
-  }
+.resultado span {
+  display: block;
+  font-size: 18px;
+  color: #dbeafe;
 }
 
-.resultado h2 {
-  color: white;
+.resultado strong {
+  display: block;
+  font-size: 60px;
+  margin: 8px 0;
 }
 
-#promedio {
-  font-size: 64px;
-  font-weight: 900;
-  margin: 10px 0;
-  text-shadow: 0 0 20px rgba(255,255,255,0.4);
-}
-
-#estado {
-  font-size: 20px;
+.resultado p {
+  font-size: 18px;
   font-weight: bold;
 }
 
-#resultadoFinal {
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 15px;
-  background: #eff6ff;
-  font-size: 20px;
-  text-align: center;
-  font-weight: bold;
-  color: #1e3a8a;
+.form-final {
+  margin-top: 25px;
+}
+
+.resultado-final {
   display: none;
+  margin-top: 25px;
+  padding: 25px;
+  border-radius: 20px;
+  background: #eff6ff;
+  color: #1e3a8a;
+  text-align: center;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1.5;
 }
 
-@media (max-width: 600px) {
-  h1 {
-    font-size: 36px;
+@media (max-width: 850px) {
+  .screen {
+    grid-template-columns: 1fr;
   }
 
-  .card {
-    padding: 20px;
+  header h1 {
+    font-size: 38px;
   }
 
-  th, td {
+  .tabs {
+    flex-direction: column;
+  }
+
+  table {
     font-size: 13px;
-    padding: 9px;
-  }
-
-  #promedio {
-    font-size: 48px;
   }
 }
