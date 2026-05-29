@@ -8,59 +8,88 @@
 </head>
 <body>
 
-  <main class="container">
-    <h1>🎓 PromedioU</h1>
-    <p>Calcula tu promedio universitario de forma rápida, clara y moderna.</p>
+  <div class="app">
+    <header>
+      <h1>🎓 PromedioU</h1>
+      <p>Calculadora universitaria de notas, créditos y finales.</p>
+    </header>
 
-    <section class="card">
-      <h2>Agregar materia</h2>
+    <nav class="tabs">
+      <button class="tab active" onclick="mostrarPantalla('promedio')">Promedio semestre</button>
+      <button class="tab" onclick="mostrarPantalla('final')">Nota para el final</button>
+    </nav>
 
-      <input type="text" id="materia" placeholder="Nombre de la materia" />
-      <input type="number" id="nota" placeholder="Nota final (0.0 a 5.0)" step="0.1" min="0" max="5" />
-      <input type="number" id="creditos" placeholder="Créditos" min="1" />
+    <section id="pantallaPromedio" class="screen active-screen">
+      <div class="panel">
+        <h2>📚 Promedio ponderado</h2>
 
-      <button onclick="agregarMateria()">Agregar materia</button>
+        <input type="text" id="materia" placeholder="Nombre de la materia">
+        <input type="number" id="nota" placeholder="Nota final de la materia" step="0.1" min="0" max="5">
+        <input type="number" id="creditos" placeholder="Créditos" min="1">
+
+        <button onclick="agregarMateria()">Agregar materia</button>
+      </div>
+
+      <div class="panel">
+        <h2>Materias agregadas</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Materia</th>
+              <th>Nota</th>
+              <th>Créditos</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tablaMaterias"></tbody>
+        </table>
+
+        <div class="resultado">
+          <span>Promedio ponderado</span>
+          <strong id="promedio">0.00</strong>
+          <p id="estado"></p>
+        </div>
+      </div>
     </section>
 
-    <section class="card">
-      <h2>📝 ¿Cuánto necesito en el final?</h2>
+    <section id="pantallaFinal" class="screen">
+      <div class="panel">
+        <h2>📝 Actividades de la materia</h2>
 
-      <input type="number" id="nota1" placeholder="Nota parcial 1" step="0.1" min="0" max="5" />
-      <input type="number" id="porcentaje1" placeholder="% Parcial 1" min="0" max="100" />
+        <input type="text" id="nombreActividad" placeholder="Actividad: quiz, parcial, tarea...">
+        <input type="number" id="notaActividad" placeholder="Nota obtenida" step="0.1" min="0" max="5">
+        <input type="number" id="porcentajeActividad" placeholder="Porcentaje de la actividad" min="0" max="100">
 
-      <input type="number" id="nota2" placeholder="Nota parcial 2" step="0.1" min="0" max="5" />
-      <input type="number" id="porcentaje2" placeholder="% Parcial 2" min="0" max="100" />
+        <button onclick="agregarActividad()">Agregar actividad</button>
+      </div>
 
-      <input type="number" id="porcentajeFinal" placeholder="% Examen final" min="0" max="100" />
-      <input type="number" id="notaObjetivo" placeholder="Nota final deseada (ej: 3.0)" step="0.1" min="0" max="5" />
+      <div class="panel">
+        <h2>Actividades agregadas</h2>
 
-      <button onclick="calcularFinal()">Calcular nota necesaria</button>
+        <table>
+          <thead>
+            <tr>
+              <th>Actividad</th>
+              <th>Nota</th>
+              <th>%</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tablaActividades"></tbody>
+        </table>
 
-      <div id="resultadoFinal"></div>
+        <div class="form-final">
+          <input type="number" id="porcentajeFinal" placeholder="% que vale el final" min="1" max="100">
+          <input type="number" id="notaObjetivo" placeholder="Nota definitiva deseada, ej: 3.0" step="0.1" min="0" max="5">
+
+          <button onclick="calcularNotaFinal()">Calcular cuánto necesito</button>
+        </div>
+
+        <div id="resultadoFinal" class="resultado-final"></div>
+      </div>
     </section>
-
-    <section class="card">
-      <h2>Materias</h2>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Materia</th>
-            <th>Nota</th>
-            <th>Créditos</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody id="tablaMaterias"></tbody>
-      </table>
-    </section>
-
-    <section class="resultado">
-      <h2>Promedio ponderado</h2>
-      <p id="promedio">0.00</p>
-      <p id="estado"></p>
-    </section>
-  </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
