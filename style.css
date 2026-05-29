@@ -4,93 +4,221 @@
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
+  font-family: "Segoe UI", Arial, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e3a8a, #312e81);
   color: #222;
+  animation: fondo 12s ease infinite alternate;
+}
+
+@keyframes fondo {
+  from {
+    background-position: left;
+  }
+  to {
+    background-position: right;
+  }
 }
 
 .container {
   width: 90%;
-  max-width: 900px;
+  max-width: 950px;
   margin: 40px auto;
+  animation: aparecer 0.8s ease;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h1 {
   text-align: center;
-  color: #1e3a8a;
+  font-size: 48px;
+  color: white;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
 }
 
-p {
-  text-align: center;
+.container > p {
+  color: #dbeafe;
+  font-size: 18px;
+  margin-bottom: 30px;
 }
 
 .card {
-  background: white;
-  padding: 25px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 28px;
   margin-top: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  border-radius: 22px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+}
+
+h2 {
+  color: #1e3a8a;
+  margin-top: 0;
 }
 
 input {
   width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
+  padding: 15px;
+  margin: 9px 0;
+  border: 2px solid #dbeafe;
+  border-radius: 14px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.25s;
+}
+
+input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
+  transform: scale(1.01);
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  background: #2563eb;
+  padding: 15px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: bold;
   cursor: pointer;
+  transition: 0.25s ease;
 }
 
 button:hover {
-  background: #1e40af;
+  transform: scale(1.03);
+  box-shadow: 0 12px 25px rgba(37, 99, 235, 0.45);
+}
+
+button:active {
+  transform: scale(0.97);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
+  margin-top: 18px;
+  overflow: hidden;
+  border-radius: 16px;
 }
 
 th, td {
-  border-bottom: 1px solid #ddd;
-  padding: 12px;
+  padding: 14px;
   text-align: center;
 }
 
 th {
-  background: #e0e7ff;
+  background: #1e3a8a;
+  color: white;
+}
+
+tr {
+  animation: filaNueva 0.4s ease;
+}
+
+@keyframes filaNueva {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+tbody tr {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tbody tr:hover {
+  background: #eff6ff;
 }
 
 .eliminar {
-  background: #dc2626;
-  padding: 8px;
+  background: linear-gradient(135deg, #ef4444, #991b1b);
+  padding: 9px 12px;
+  font-size: 14px;
 }
 
 .eliminar:hover {
-  background: #991b1b;
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
 }
 
 .resultado {
-  margin-top: 25px;
-  padding: 25px;
-  background: #1e3a8a;
+  margin-top: 28px;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.15);
   color: white;
-  border-radius: 12px;
+  border-radius: 25px;
   text-align: center;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 20px 55px rgba(0,0,0,0.3);
+  animation: pulso 2.5s ease infinite;
+}
+
+@keyframes pulso {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.015);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.resultado h2 {
+  color: white;
 }
 
 #promedio {
-  font-size: 48px;
+  font-size: 64px;
+  font-weight: 900;
+  margin: 10px 0;
+  text-shadow: 0 0 20px rgba(255,255,255,0.4);
+}
+
+#estado {
+  font-size: 20px;
   font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 36px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  th, td {
+    font-size: 13px;
+    padding: 9px;
+  }
+
+  #promedio {
+    font-size: 48px;
+  }
 }
