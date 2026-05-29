@@ -2,100 +2,21 @@ let materias = [];
 let actividades = [];
 
 function mostrarPantalla(pantalla) {
-  const pantallaPromedio = document.getElementById("pantallaPromedio");
-  const pantallaFinal = document.getElementById("pantallaFinal");
-  const tabs = document.querySelectorAll(".tab");
+  document.getElementById("pantallaFinal").classList.remove("active");
+  document.getElementById("pantallaPromedio").classList.remove("active");
 
-  pantallaPromedio.classList.remove("active-screen");
-  pantallaFinal.classList.remove("active-screen");
+  const botones = document.querySelectorAll(".nav-btn");
+  botones.forEach(boton => boton.classList.remove("active"));
 
-  tabs.forEach(tab => tab.classList.remove("active"));
+  if (pantalla === "final") {
+    document.getElementById("pantallaFinal").classList.add("active");
+    botones[0].classList.add("active");
+  }
 
   if (pantalla === "promedio") {
-    pantallaPromedio.classList.add("active-screen");
-    tabs[0].classList.add("active");
-  } else {
-    pantallaFinal.classList.add("active-screen");
-    tabs[1].classList.add("active");
+    document.getElementById("pantallaPromedio").classList.add("active");
+    botones[1].classList.add("active");
   }
-}
-
-function agregarMateria() {
-  const nombre = document.getElementById("materia").value.trim();
-  const nota = parseFloat(document.getElementById("nota").value);
-  const creditos = parseInt(document.getElementById("creditos").value);
-
-  if (nombre === "" || isNaN(nota) || isNaN(creditos)) {
-    alert("Completa todos los campos.");
-    return;
-  }
-
-  if (nota < 0 || nota > 5) {
-    alert("La nota debe estar entre 0.0 y 5.0.");
-    return;
-  }
-
-  if (creditos <= 0) {
-    alert("Los créditos deben ser mayores a 0.");
-    return;
-  }
-
-  materias.push({ nombre, nota, creditos });
-
-  document.getElementById("materia").value = "";
-  document.getElementById("nota").value = "";
-  document.getElementById("creditos").value = "";
-
-  mostrarMaterias();
-  calcularPromedio();
-}
-
-function mostrarMaterias() {
-  const tabla = document.getElementById("tablaMaterias");
-  tabla.innerHTML = "";
-
-  materias.forEach((materia, index) => {
-    const fila = document.createElement("tr");
-
-    fila.innerHTML = `
-      <td>${materia.nombre}</td>
-      <td>${materia.nota.toFixed(2)}</td>
-      <td>${materia.creditos}</td>
-      <td><button class="eliminar" onclick="eliminarMateria(${index})">Eliminar</button></td>
-    `;
-
-    tabla.appendChild(fila);
-  });
-}
-
-function calcularPromedio() {
-  let sumaNotasPorCreditos = 0;
-  let sumaCreditos = 0;
-
-  materias.forEach(materia => {
-    sumaNotasPorCreditos += materia.nota * materia.creditos;
-    sumaCreditos += materia.creditos;
-  });
-
-  const promedio = sumaCreditos === 0 ? 0 : sumaNotasPorCreditos / sumaCreditos;
-
-  document.getElementById("promedio").textContent = promedio.toFixed(2);
-
-  const estado = document.getElementById("estado");
-
-  if (materias.length === 0) {
-    estado.textContent = "";
-  } else if (promedio >= 3.0) {
-    estado.textContent = "Vas ganando el semestre.";
-  } else {
-    estado.textContent = "Debes subir el promedio.";
-  }
-}
-
-function eliminarMateria(index) {
-  materias.splice(index, 1);
-  mostrarMaterias();
-  calcularPromedio();
 }
 
 function agregarActividad() {
@@ -139,31 +60,37 @@ function mostrarActividades() {
   tabla.innerHTML = "";
 
   actividades.forEach((actividad, index) => {
-    const fila = document.createElement("tr");
-
-    fila.innerHTML = `
-      <td>${actividad.nombre}</td>
-      <td>${actividad.nota.toFixed(2)}</td>
-      <td>${actividad.porcentaje}%</td>
-      <td><button class="eliminar" onclick="eliminarActividad(${index})">Eliminar</button></td>
+    tabla.innerHTML += `
+      <tr>
+        <td>${actividad.nombre}</td>
+        <td>${actividad.nota.toFixed(2)}</td>
+        <td>${actividad.porcentaje}%</td>
+        <td><button class="delete-btn" onclick="eliminarActividad(${index})">🗑</button></td>
+      </tr>
     `;
-
-    tabla.appendChild(fila);
   });
 }
 
 function eliminarActividad(index) {
   actividades.splice(index, 1);
   mostrarActividades();
+  reiniciarResultadoFinal();
+}
 
-  const resultado = document.getElementById("resultadoFinal");
-  resultado.style.display = "none";
+function limpiarActividades() {
+  actividades = [];
+  mostrarActividades();
+  reiniciarResultadoFinal();
+}
+
+function reiniciarResultadoFinal() {
+  document.querySelector("#resultadoFinal strong").textContent = "--";
+  document.querySelector("#resultadoFinal p").textContent = "Nota que necesitas:";
 }
 
 function calcularNotaFinal() {
   const porcentajeFinal = parseFloat(document.getElementById("porcentajeFinal").value);
   const notaObjetivo = parseFloat(document.getElementById("notaObjetivo").value);
-  const resultado = document.getElementById("resultadoFinal");
 
   if (actividades.length === 0) {
     alert("Agrega al menos una actividad.");
@@ -171,12 +98,7 @@ function calcularNotaFinal() {
   }
 
   if (isNaN(porcentajeFinal) || isNaN(notaObjetivo)) {
-    alert("Completa el porcentaje del final y la nota objetivo.");
-    return;
-  }
-
-  if (porcentajeFinal <= 0 || porcentajeFinal > 100) {
-    alert("El porcentaje del final debe estar entre 1 y 100.");
+    alert("Completa la nota objetivo y el porcentaje restante.");
     return;
   }
 
@@ -189,7 +111,7 @@ function calcularNotaFinal() {
   const porcentajeTotal = porcentajeActividades + porcentajeFinal;
 
   if (porcentajeTotal !== 100) {
-    alert(`La suma de actividades y final debe ser 100%. Actualmente suma ${porcentajeTotal}%.`);
+    alert(`La suma debe ser 100%. Actualmente suma ${porcentajeTotal}%.`);
     return;
   }
 
@@ -199,22 +121,99 @@ function calcularNotaFinal() {
 
   const notaNecesaria = (notaObjetivo - acumulado) / (porcentajeFinal / 100);
 
-  resultado.style.display = "block";
+  const resultadoTexto = document.querySelector("#resultadoFinal strong");
+  const resultadoDescripcion = document.querySelector("#resultadoFinal p");
 
   if (notaNecesaria <= 0) {
-    resultado.innerHTML = `
-      🎉 Ya alcanzaste la nota objetivo.<br>
-      Incluso con 0.0 en el final llegarías a ${notaObjetivo.toFixed(2)}.
-    `;
+    resultadoTexto.textContent = "0.00";
+    resultadoDescripcion.textContent = "Ya alcanzaste tu meta.";
   } else if (notaNecesaria > 5) {
-    resultado.innerHTML = `
-      😢 Necesitas sacar <strong>${notaNecesaria.toFixed(2)}</strong> en el final.<br>
-      No es posible porque supera 5.0.
-    `;
+    resultadoTexto.textContent = notaNecesaria.toFixed(2);
+    resultadoDescripcion.textContent = "No es posible llegar a esa nota.";
   } else {
-    resultado.innerHTML = `
-      📚 Necesitas sacar <strong>${notaNecesaria.toFixed(2)}</strong> en el final<br>
-      para terminar la materia en ${notaObjetivo.toFixed(2)}.
-    `;
+    resultadoTexto.textContent = notaNecesaria.toFixed(2);
+    resultadoDescripcion.textContent = "Nota que necesitas:";
   }
+}
+
+function agregarMateria() {
+  const nombre = document.getElementById("materia").value.trim();
+  const nota = parseFloat(document.getElementById("nota").value);
+  const creditos = parseInt(document.getElementById("creditos").value);
+
+  if (nombre === "" || isNaN(nota) || isNaN(creditos)) {
+    alert("Completa todos los campos.");
+    return;
+  }
+
+  if (nota < 0 || nota > 5) {
+    alert("La nota debe estar entre 0.0 y 5.0.");
+    return;
+  }
+
+  if (creditos <= 0) {
+    alert("Los créditos deben ser mayores a 0.");
+    return;
+  }
+
+  materias.push({ nombre, nota, creditos });
+
+  document.getElementById("materia").value = "";
+  document.getElementById("nota").value = "";
+  document.getElementById("creditos").value = "";
+
+  mostrarMaterias();
+  calcularPromedio();
+}
+
+function mostrarMaterias() {
+  const tabla = document.getElementById("tablaMaterias");
+  tabla.innerHTML = "";
+
+  materias.forEach((materia, index) => {
+    tabla.innerHTML += `
+      <tr>
+        <td>${materia.nombre}</td>
+        <td>${materia.nota.toFixed(2)}</td>
+        <td>${materia.creditos}</td>
+        <td><button class="delete-btn" onclick="eliminarMateria(${index})">🗑</button></td>
+      </tr>
+    `;
+  });
+}
+
+function calcularPromedio() {
+  let sumaNotasPorCreditos = 0;
+  let sumaCreditos = 0;
+
+  materias.forEach(materia => {
+    sumaNotasPorCreditos += materia.nota * materia.creditos;
+    sumaCreditos += materia.creditos;
+  });
+
+  const promedio = sumaCreditos === 0 ? 0 : sumaNotasPorCreditos / sumaCreditos;
+
+  document.getElementById("promedio").textContent = promedio.toFixed(2);
+
+  const estado = document.getElementById("estado");
+
+  if (materias.length === 0) {
+    estado.textContent = "";
+  } else if (promedio >= 3.0) {
+    estado.textContent = "Vas ganando el semestre.";
+  } else {
+    estado.textContent = "Debes subir el promedio.";
+  }
+}
+
+function eliminarMateria(index) {
+  materias.splice(index, 1);
+  mostrarMaterias();
+  calcularPromedio();
+}
+
+function limpiarMaterias() {
+  materias = [];
+  mostrarMaterias();
+  calcularPromedio();
 }
